@@ -29,6 +29,12 @@ def converter(md, exts):
   cmark = CMark(prog=args.program, library_dir=args.library_dir, extensions=args.extensions)
   [ec, result, err] = cmark.to_commonmark(md, exts)
   if ec == 0:
+    # Remove autolink from extensions (if present) after roundtripping.
+    # See https://github.com/kivikakk/comrak/pull/679#issuecomment-3477501376.
+    try:
+      exts.remove('autolink')
+    except ValueError:
+      pass
     [ec, html, err] = cmark.to_html(result, exts)
     if ec == 0:
         # In the commonmark writer we insert dummy HTML
