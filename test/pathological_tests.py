@@ -29,7 +29,7 @@ def hash_collisions():
 
     document = ''.join("[%s]: /url\n\n[%s]\n\n" % (key, bad_key) for key in collisions)
 
-    return document, re.compile("(<p>\[%s\]</p>\n){%d}" % (bad_key, COUNT-1))
+    return document, re.compile("(<p>\\[%s\\]</p>\n){%d}" % (bad_key, COUNT-1))
 
 allowed_failures = {"many references": True}
 
@@ -47,10 +47,10 @@ pathological = {
                   re.compile("(_a ){64999}_a")),
     "many link closers with no openers":
                  (("a]" * 65000),
-                  re.compile("(a\]){65000}")),
+                  re.compile("(a\\]){65000}")),
     "many link openers with no closers":
                  (("[a" * 65000),
-                  re.compile("(\[a){65000}")),
+                  re.compile("(\\[a){65000}")),
     "mismatched openers and closers":
                  (("*a_ " * 50000),
                   re.compile("([*]a[_] ){49999}[*]a_")),
@@ -59,19 +59,19 @@ pathological = {
                   re.compile("a[*][*]b(c[*] ){49999}c[*]")),
     "link openers and emph closers":
                  (("[ a_" * 50000),
-                  re.compile("(\[ a_){50000}")),
+                  re.compile("(\\[ a_){50000}")),
     "pattern [ (]( repeated":
                  (("[ (](" * 80000),
-                  re.compile("(\[ \(\]\(){80000}")),
+                  re.compile("(\\[ \\(\\]\\(){80000}")),
     "pattern ![[]() repeated":
                  ("![[]()" * 160000,
-                  re.compile("(!\[<a href=\"\"></a>){160000}")),
+                  re.compile("(!\\[<a href=\"\"></a>){160000}")),
     "hard link/emph case":
                  ("**x [a*b**c*](d)",
                   re.compile("\\*\\*x <a href=\"d\">a<em>b\\*\\*c</em></a>")),
     "nested brackets":
                  (("[" * 50000) + "a" + ("]" * 50000),
-                  re.compile("\[{50000}a\]{50000}")),
+                  re.compile("\\[{50000}a\\]{50000}")),
     "nested block quotes":
                  ((("> " * 50000) + "a"),
                   re.compile("(<blockquote>\n){50000}")),
@@ -86,13 +86,13 @@ pathological = {
                   re.compile("^<p>[e`]*</p>\n$")),
     "unclosed links A":
                  ("[a](<b" * 30000,
-                  re.compile("(\[a\]\(&lt;b){30000}")),
+                  re.compile("(\\[a\\]\\(&lt;b){30000}")),
     "unclosed links B":
                  ("[a](b" * 30000,
-                  re.compile("(\[a\]\(b){30000}")),
+                  re.compile("(\\[a\\]\\(b){30000}")),
     "unclosed <!--":
                  ("</" + "<!--" * 300000,
-                  re.compile("\&lt;\/(\&lt;!--){300000}")),
+                  re.compile("\\&lt;\\/(\\&lt;!--){300000}")),
     "tables":
                  ("aaa\rbbb\n-\v\n" * 30000,
                   re.compile("^<p>aaa</p>\n<table>\n<thead>\n<tr>\n<th>bbb</th>\n</tr>\n</thead>\n<tbody>\n(<tr>\n<td>aaa</td>\n</tr>\n<tr>\n<td>bbb</td>\n</tr>\n<tr>\n<td>-\x0b</td>\n</tr>\n){29999}</tbody>\n</table>\n$")),
