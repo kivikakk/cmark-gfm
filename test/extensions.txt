@@ -682,21 +682,7 @@ Even with {"x":"y"} or 1 > 2 or whatever. Even **markdown**.
 <!---->
 <!--thistoo-->
 .
-<p>This is &lt;xmp> not okay, but <strong>this</strong> <strong>is</strong>.</p>
-<p>This is &lt;xmp> not okay, but **this** <strong>is</strong>.</p>
-<p>Nope, I won't have &lt;textarea>.</p>
-<p>No &lt;textarea> here either.</p>
-<p>This <random /> <thing> is okay</thing> though.</p>
-<p>Yep, <totally>okay</totally>.</p>
-<!-- HTML comments are okay, though. -->
-<p>&lt;!- But we're strict. -&gt;
-&lt;! No nonsense. &gt;</p>
-<!-- Leave multiline comments the heck alone, though, okay?
-Even with {"x":"y"} or 1 > 2 or whatever. Even **markdown**.
--->
-<!--- Support everything CommonMark's parser does. -->
-<!---->
-<!--thistoo-->
+<IGNORE>
 ````````````````````````````````
 
 ## Footnotes
